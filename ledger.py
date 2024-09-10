@@ -1,5 +1,5 @@
 # class implementing a ledger for finance tracker cli 
-from datetime import datetime
+from datetime import datetime, date
 
 class Account:
     """class representing an account, such as checking, savings, credit card, or investment.
@@ -70,7 +70,8 @@ class Transaction:
     def update_account(self, new_account: Account):
         self.account = new_account
         
-    
+    def __str__(self) -> str:
+        return f"Transaction type: {self.kind} | Amount: {self.amount} | Category: {self.category} | Date: {self.date}"
         
 class Expense(Transaction):
     """subclass of Transaction representing an expense. adds a target string,
@@ -98,7 +99,7 @@ class Transfer(Transaction):
 
 class Ledger:
     
-    def __init__(self, name: str, accounts: list[Account] = [], date_created=datetime.now().date(), transactions: list[Transaction] = []) -> None:
+    def __init__(self, name: str, accounts: list[Account] = [], date_created=date.today(), transactions: list[Transaction] = []) -> None:
         self.name = name
         self.date_created = date_created
         self.accounts = accounts
@@ -117,6 +118,7 @@ class Ledger:
         return total 
 
     def __str__(self) -> str:
-        print(f"Ledger {self.name} | Created {self.date_created}")
+        string = f"Ledger \"{self.name}\" | Created {self.date_created}" 
         for transaction in self.transactions:
-            print(transaction)
+            string += '\n' + transaction.__str__()
+        return string
