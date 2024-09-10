@@ -71,7 +71,7 @@ class Transaction:
         self.account = new_account
         
     def __str__(self) -> str:
-        return f"Transaction type: {self.kind} | Amount: {self.amount} | Category: {self.category} | Date: {self.date}"
+        return f"Transaction type: {self.kind} | Amount: {self.amount} | Category: {self.category} | Date: {self.date}"`
         
 class Expense(Transaction):
     """subclass of Transaction representing an expense. adds a target string,
@@ -118,6 +118,10 @@ class Ledger:
         return total 
 
     def __str__(self) -> str:
+        string = f"Ledger \"{self.name}\" | Created {self.date_created}" 
+        return string
+
+    def full_repr(self) -> str:
         string = f"Ledger \"{self.name}\" | Created {self.date_created}" 
         for transaction in self.transactions:
             string += '\n' + transaction.__str__()

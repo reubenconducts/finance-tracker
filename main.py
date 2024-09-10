@@ -64,6 +64,7 @@ def add_trans():
 def main():
     ledger = ld.Ledger(name="base")      
     while True:
+        print(f"The current ledger is {ledger}")
         command: str = input("\nWhat is your command?\n> ")
         command = command.strip()
         command = command.lower()
@@ -75,7 +76,7 @@ def main():
             new_trans = add_trans()
             ledger.add_transaction(new_trans)
         elif command == "show":
-            print(ledger)
+            print(ledger.full_repr)
         elif command == "open":
             pass 
 
