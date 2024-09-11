@@ -3,15 +3,18 @@ from datetime import datetime, date
 
 class Account:
     """class representing an account, such as checking, savings, 
-    credit card, or investment.
+    credit card, or investment. 
     """
     def __init__(self, nickname: str, starting_balance: float) -> None:
         self.starting_balance = starting_balance
         self.balance = starting_balance
         self.nickname = nickname
     
-    def update_balance(self, new_balance: float) -> None:
+    def set_balance(self, new_balance: float) -> None:
         self.balance = new_balance
+    
+    def get_balance(self) -> float:
+        return self.balance
     
     def transfer_from(self, amount: float) -> None:
         self.balance = self.balance - amount 
@@ -31,35 +34,65 @@ class Account:
         print(f"Current balance for {self.nickname}: ${self.balance}")
         
 class Savings(Account):
-    def __init__(self, nickname: str, starting_balance: float, account: int, routing: int) -> None:
+    def __init__(self, 
+                 nickname: str, 
+                 starting_balance: float, 
+                 account: int, 
+                 routing: int
+                 ) -> None:
+        
         super().__init__(nickname=nickname, starting_balance=starting_balance)
         self.account = account
         self.routing = routing
     
     def __repr__(self) -> str:
-        return ("Savings " + super().__repr__() + f"\nAccount: {self.account}, Routing: {self.routing}")
+        return (
+            f"Savings {super().__repr__()} "
+            f"Account: {self.account}, Routing: {self.routing}"
+        )
 
     def __str__(self) -> str:
-        return "Savings " + super().__str__() + f"\nAccount number: {self.account}, Routing number: {self.routing}"
+        return (
+            f"Savings {super().__str__()} "
+            f"Account number: {self.account}, Routing number: {self.routing}"
+        )
     
 class Checking(Account):
-    def __init__(self, nickname: str, starting_balance: float, account: int, routing: int) -> None:
+    def __init__(self, 
+                 nickname: str, 
+                 starting_balance: float, 
+                 account: int, 
+                 routing: int
+                 ) -> None:
+        
         super().__init__(nickname=nickname, starting_balance=starting_balance)
         self.account = account
         self.routing = routing
     
     def __repr__(self) -> str:
-        return ("Checking " + super().__repr__() + f"\nAccount: {self.account}, Routing: {self.routing}")
+        return (
+            f"Checking {super().__repr__()} "
+            f"Account: {self.account}, Routing: {self.routing}"
+        )
 
     def __str__(self) -> str:
-        return "Checking " + super().__str__() + f"\nAccount number: {self.account}, Routing number: {self.routing}"
+        return (
+            f"Checking {super().__str__()} "
+            f"Account number: {self.account}, Routing number: {self.routing}"
+        )
     
 class Investment(Account):
     def __init__(self, nickname: str, starting_balance: float) -> None:
         super().__init__(nickname, starting_balance)
 
 class Transaction:
-    def __init__(self, amount: float, account: Account, kind: str, category: str, date=datetime.now().date()) -> None:
+    def __init__(self,
+                 amount: float, 
+                 account: Account, 
+                 kind: str, 
+                 category: str, 
+                 date=datetime.now().date()
+                 ) -> None:
         self.amount = amount 
         self.account = account 
         self.category = category 
@@ -74,23 +107,47 @@ class Transaction:
         self.account = new_account
         
     def __str__(self) -> str:
-        return f'Transaction type: {self.kind} | Amount: {self.amount} | Category: {self.category} | Date: {self.date}'
+        return (
+            f'Transaction type: {self.kind} | Amount: {self.amount}'
+            f'| Category: {self.category} | Date: {self.date}'
+        )
         
 class Expense(Transaction):
     """subclass of Transaction representing an expense. adds a target string,
     representing the recipient of the expense.
     """
-    def __init__(self, amount: float, account: Account, target: str, category: str, date=datetime.now().date()) -> None:
+    def __init__(self, 
+                 amount: float, 
+                 account: Account, 
+                 target: str, 
+                 category: str, 
+                 date=datetime.now().date()
+                 ) -> None:
+        
         super().__init__(amount, account, category, date, kind="expense")
         self.target = target 
         
 class Income(Transaction):
-    def __init__(self, amount: float, source: str, account: Account, category: str, date=datetime.now().date()) -> None:
+    def __init__(self, 
+                 amount: float, 
+                 source: str, 
+                 account: Account, 
+                 category: str, 
+                 date=datetime.now().date()
+                 ) -> None:
+        
         super().__init__(amount, account, category, date, kind="income")
         self.source = source
         
 class Transfer(Transaction):
-    def __init__(self, amount: float, from_account: Account, to_account: Account, category: str, date=datetime.now().date()) -> None:
+    def __init__(self, 
+                 amount: float, 
+                 from_account: Account, 
+                 to_account: Account, 
+                 category: str, 
+                 date=datetime.now().date()
+                 ) -> None:
+        
         super().__init__(amount, from_account, category, date, kind="transfer")
         self.to_account = to_account 
         
@@ -102,14 +159,24 @@ class Transfer(Transaction):
 
 class Ledger:
     
-    def __init__(self, name: str, accounts: list[Account] = [], date_created=date.today(), transactions: list[Transaction] = []) -> None:
+    def __init__(self, 
+                 name: str, 
+                 accounts: list[Account] = [], 
+                 date_created=date.today(), 
+                 transactions: list[Transaction] = None
+                 ) -> None:
+        
         self.name = name
         self.date_created = date_created
         self.accounts = accounts
-        self.transactions = transactions
+        if transactions is not None:
+            self.transactions = transactions
+        else:
+            self.transactions = []
     
     def add_transaction(self, transaction: Transaction) -> None:
         self.transactions.append(transaction)
+        
     
     def compute_total_balance(self) -> float:
         total = 0
