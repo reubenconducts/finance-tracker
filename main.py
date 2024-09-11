@@ -43,7 +43,7 @@ def add_trans():
     account = input(f"\nFrom which account did the transaction come?\n> ")
     
     # now, get the category of the transaction. eventually, include functionality to add categories that don't yet exist in the ledger.
-    category = input(f"What is the category of the transaction?\n> ")
+    category = input(f"\nWhat is the category of the transaction?\n> ")
     
     # now, get the date of the transaction
     while True:
@@ -62,9 +62,9 @@ def add_trans():
     return ld.Transaction(amount=amount, account=account, kind=kind, category=category, date=trans_date)
 
 def main():
-    ledger = ld.Ledger(name="base")      
+    ledger = ld.Ledger(name="base")     
+    print(f"The current ledger is {ledger}") 
     while True:
-        print(f"The current ledger is {ledger}")
         command: str = input("\nWhat is your command?\n> ")
         command = command.strip()
         command = command.lower()
@@ -76,7 +76,7 @@ def main():
             new_trans = add_trans()
             ledger.add_transaction(new_trans)
         elif command == "show":
-            print(ledger.full_repr)
+            print(ledger.full_repr())
         elif command == "open":
             pass 
 

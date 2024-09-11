@@ -2,7 +2,8 @@
 from datetime import datetime, date
 
 class Account:
-    """class representing an account, such as checking, savings, credit card, or investment.
+    """class representing an account, such as checking, savings, 
+    credit card, or investment.
     """
     def __init__(self, nickname: str, starting_balance: float) -> None:
         self.starting_balance = starting_balance
@@ -19,7 +20,9 @@ class Account:
         self.balance = self.balance + amount
         
     def __repr__(self) -> str:
-        return f"Account: nickname = {self.nickname}, starting balance = {self.starting_balance}, current balance = {self.balance}"
+        return (f"Account: nickname = {self.nickname}"
+            f" starting balance = {self.starting_balance}"
+            f" current balance = {self.balance}")
     
     def __str__(self) -> str:
         return f"Account {self.nickname}"
@@ -28,28 +31,28 @@ class Account:
         print(f"Current balance for {self.nickname}: ${self.balance}")
         
 class Savings(Account):
-    def __init__(self, starting_balance: float, accounting: int, routing: int) -> None:
-        super().__init__(starting_balance)
-        self.accounting = accounting 
+    def __init__(self, nickname: str, starting_balance: float, account: int, routing: int) -> None:
+        super().__init__(nickname=nickname, starting_balance=starting_balance)
+        self.account = account
         self.routing = routing
     
     def __repr__(self) -> str:
-        return "Savings" + super().__repr__() + f"\nAccounting: {self.accounting}, Routing: {self.routing}"
+        return ("Savings " + super().__repr__() + f"\nAccount: {self.account}, Routing: {self.routing}")
 
     def __str__(self) -> str:
-        return "Savings" + super().__str__() + f"\nAccounting number: {self.accounting}, Routing number: {self.routing}"
+        return "Savings " + super().__str__() + f"\nAccount number: {self.account}, Routing number: {self.routing}"
     
 class Checking(Account):
-    def __init__(self, starting_balance: float, accounting: int, routing: int) -> None:
-        super().__init__(starting_balance)
-        self.accounting = accounting 
+    def __init__(self, nickname: str, starting_balance: float, account: int, routing: int) -> None:
+        super().__init__(nickname=nickname, starting_balance=starting_balance)
+        self.account = account
         self.routing = routing
     
     def __repr__(self) -> str:
-        return super().__repr__() + f"\nAccounting: {self.accounting}, Routing: {self.routing}"
+        return ("Checking " + super().__repr__() + f"\nAccount: {self.account}, Routing: {self.routing}")
 
     def __str__(self) -> str:
-        return super().__str__() + f"\nAccounting number: {self.accounting}, Routing number: {self.routing}"
+        return "Checking " + super().__str__() + f"\nAccount number: {self.account}, Routing number: {self.routing}"
     
 class Investment(Account):
     def __init__(self, nickname: str, starting_balance: float) -> None:
@@ -71,7 +74,7 @@ class Transaction:
         self.account = new_account
         
     def __str__(self) -> str:
-        return f"Transaction type: {self.kind} | Amount: {self.amount} | Category: {self.category} | Date: {self.date}"`
+        return f'Transaction type: {self.kind} | Amount: {self.amount} | Category: {self.category} | Date: {self.date}'
         
 class Expense(Transaction):
     """subclass of Transaction representing an expense. adds a target string,
@@ -126,3 +129,10 @@ class Ledger:
         for transaction in self.transactions:
             string += '\n' + transaction.__str__()
         return string
+    
+    
+class User():
+    def __init__(self) -> None:
+        pass
+    
+    
