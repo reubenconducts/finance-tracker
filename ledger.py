@@ -91,12 +91,12 @@ class Transaction:
                  account: Account, 
                  kind: str, 
                  category: str, 
-                 date=datetime.now().date()
+                 date_created=datetime.now().date()
                  ) -> None:
         self.amount = amount 
         self.account = account 
         self.category = category 
-        self.date = date
+        self.date_created = date_created
         self.kind = kind
     
     # allow for updating of amount of a transaction 
@@ -109,7 +109,7 @@ class Transaction:
     def __str__(self) -> str:
         return (
             f'Transaction type: {self.kind} | Amount: {self.amount}'
-            f'| Category: {self.category} | Date: {self.date}'
+            f'| Category: {self.category} | Date: {self.date_created}'
         )
         
 class Expense(Transaction):
@@ -121,10 +121,10 @@ class Expense(Transaction):
                  account: Account, 
                  target: str, 
                  category: str, 
-                 date=datetime.now().date()
+                 date_created=datetime.now().date()
                  ) -> None:
         
-        super().__init__(amount, account, category, date, kind="expense")
+        super().__init__(amount, account, kind="expense", category=category, date_created=date_created)
         self.target = target 
         
 class Income(Transaction):
@@ -133,10 +133,10 @@ class Income(Transaction):
                  source: str, 
                  account: Account, 
                  category: str, 
-                 date=datetime.now().date()
+                 date_created=datetime.now().date()
                  ) -> None:
         
-        super().__init__(amount, account, category, date, kind="income")
+        super().__init__(amount, account, kind="income", category=category, date_created=date_created)
         self.source = source
         
 class Transfer(Transaction):
@@ -145,10 +145,10 @@ class Transfer(Transaction):
                  from_account: Account, 
                  to_account: Account, 
                  category: str, 
-                 date=datetime.now().date()
+                 date_created=datetime.now().date()
                  ) -> None:
         
-        super().__init__(amount, from_account, category, date, kind="transfer")
+        super().__init__(amount, account=from_account, kind="transfer", category=category, date_created=date_created)
         self.to_account = to_account 
         
     def update_from_account(self, new_account: Account):
